@@ -1,7 +1,5 @@
 # Weather Data Pipeline for Energy Forecasting
 
-**Enpal Energy Take-Home Assignment**  
-
 ---
 
 ## 🎯 Project Overview
