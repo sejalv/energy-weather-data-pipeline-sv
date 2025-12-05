@@ -1,6 +1,5 @@
 # Weather Data Pipeline for Energy Forecasting
 
----
 
 ## 🎯 Project Overview
 
