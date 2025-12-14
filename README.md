@@ -1,17 +1,17 @@
-# Weather Data Pipeline
+# Energy Weather Data Pipeline 
 
+## Project Overview
 
-## 🎯 Project Overview
-
-This project implements a weather data pipeline that ingests German weather data from the DWD (German Weather Service) via BrightSky API, transforms it into ML-ready format at postal code granularity.
+The energy market compute forecasts via machine learning.
+This project implements a weather data pipeline that ingests German weather data from the DWD (German Weather Service) via BrightSky API, and transforms the provided observations and forecasts at postal code granularity, ready to be consumed for downstream ML services.
 
 ### Key Features
-- ✅ **Medallion Architecture**: Bronze (Raw) → Silver (Cleaned) → Gold (ML-Ready)
-- ✅ **Spatial Intelligence**: Inverse Distance Weighting (IDW) for postal code aggregation
-- ✅ **Data Quality**: 2+ validation steps with quality scoring
-- ✅ **Idempotent**: Safe to re-run without duplicates
-- ✅ **Scalable**: Handles 900+ postal codes, 1000+ weather stations
-- ✅ **Observable**: Comprehensive logging and metrics
+- **Medallion Architecture**: Bronze (Raw) → Silver (Cleaned) → Gold (ML-Ready)
+- **Spatial Intelligence**: Inverse Distance Weighting (IDW) for postal code aggregation
+- **Data Quality**: 2+ validation steps with quality scoring
+- **Idempotent**: Safe to re-run without duplicates
+- **Scalable**: Handles 900+ postal codes, 1000+ weather stations
+- **Observable**: Comprehensive logging and metrics
 
 ### Pipeline Output
 - **269 unique postal codes** covered (Berlin/Brandenburg region)
@@ -21,24 +21,24 @@ This project implements a weather data pipeline that ingests German weather data
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────
 │                    BrightSky API (DWD Data)                 │
-└──────────────────────┬──────────────────────────────────────┘
+└──────────────────────┬─────────────────────────────
                        │
                        ▼ Ingestion (Every 6h)
-┌─────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────
 │                  BRONZE LAYER (Raw)                         │
 │  • raw_weather_observations (station-level)                 │
 │  • raw_weather_forecasts (station-level)                    │
 │  • weather_stations (metadata)                              │
 │  • postal_codes (geometries)                                │
-└──────────────────────┬──────────────────────────────────────┘
+└──────────────────────┬─────────────────────────────
                        │
                        ▼ Transformation (Every 1h)
-┌─────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────
 │                  SILVER LAYER (Staging)                     │
 │  • stg_observations (validated)                             │
 │  • stg_forecasts (validated)                                │
@@ -46,17 +46,17 @@ This project implements a weather data pipeline that ingests German weather data
 │    1. Remove incomplete records (>50% nulls)                │
 │    2. Flag outliers (physical limits)                       │
 │    3. Temporal consistency checks                           │
-└──────────────────────┬──────────────────────────────────────┘
+└──────────────────────┬─────────────────────────────
                        │
                        ▼ Aggregation (IDW)
-┌─────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────
 │                  GOLD LAYER (ML-Ready)                      │
 │  • analytics_weather_by_postal_code                         │
 │    - Postal code level (269 codes)                          │
 │    - Hourly resolution                                      │
 │    - Quality scores                                         │
 │    - Contributing station metadata                          │
-└─────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────
 ```
 
 
@@ -70,7 +70,7 @@ This project implements a weather data pipeline that ingests German weather data
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Docker & Docker Compose
@@ -419,7 +419,7 @@ update_accuracy_score(1.0 - mae/10.0)
 
 ### Deliverables
 - ✅ Working code (Python + SQL)
-- ✅ Docker Compose for deployment
+- ✅ Docker Compose for local environment
 - ✅ Comprehensive documentation (this README)
 - ✅ Data quality framework
 - ✅ Monitoring & logging
