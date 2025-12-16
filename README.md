@@ -24,21 +24,21 @@ This project implements a weather data pipeline that ingests German weather data
 ## Architecture
 
 ```
-┌────────────────────────────────────────────────────
+┌─────────────────────────────────────────────────────────────
 │                    BrightSky API (DWD Data)                 │
-└──────────────────────┬─────────────────────────────
+└──────────────────────┬──────────────────────────────────────
                        │
                        ▼ Ingestion (Every 6h)
-┌────────────────────────────────────────────────────
+┌─────────────────────────────────────────────────────────────
 │                  BRONZE LAYER (Raw)                         │
 │  • raw_weather_observations (station-level)                 │
 │  • raw_weather_forecasts (station-level)                    │
 │  • weather_stations (metadata)                              │
 │  • postal_codes (geometries)                                │
-└──────────────────────┬─────────────────────────────
+└──────────────────────┬──────────────────────────────────────
                        │
                        ▼ Transformation (Every 1h)
-┌────────────────────────────────────────────────────
+┌─────────────────────────────────────────────────────────────
 │                  SILVER LAYER (Staging)                     │
 │  • stg_observations (validated)                             │
 │  • stg_forecasts (validated)                                │
@@ -46,17 +46,17 @@ This project implements a weather data pipeline that ingests German weather data
 │    1. Remove incomplete records (>50% nulls)                │
 │    2. Flag outliers (physical limits)                       │
 │    3. Temporal consistency checks                           │
-└──────────────────────┬─────────────────────────────
+└──────────────────────┬──────────────────────────────────────
                        │
                        ▼ Aggregation (IDW)
-┌────────────────────────────────────────────────────
+┌─────────────────────────────────────────────────────────────
 │                  GOLD LAYER (ML-Ready)                      │
 │  • analytics_weather_by_postal_code                         │
 │    - Postal code level (269 codes)                          │
 │    - Hourly resolution                                      │
 │    - Quality scores                                         │
 │    - Contributing station metadata                          │
-└────────────────────────────────────────────────────
+└─────────────────────────────────────────────────────────────
 ```
 
 
