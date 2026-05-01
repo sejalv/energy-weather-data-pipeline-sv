@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project implements a pipeline that ingests German weather data from the DWD (German Weather Service) via BrightSky API, and transforms the provided observations and forecasts at postal code granularity, ready to be consumed for downstream ML services such as energy market forecasting.
+A pipeline that serves downstream ML services such as energy market forecasting, using German weather data from the DWD, and transforms the provided observations and forecasts at postal code granularity.
 
 ### Key Features
 - **Medallion Architecture**: Bronze (Raw) → Silver (Cleaned) → Gold (ML-Ready)
@@ -29,7 +29,7 @@ This project implements a pipeline that ingests German weather data from the DWD
                        │
                        ▼ Ingestion (Every 6h)
 ┌─────────────────────────────────────────────────────────────
-│                  BRONZE LAYER (Raw)                         │
+│                  RAW LAYER                                  │
 │  • raw_weather_observations (station-level)                 │
 │  • raw_weather_forecasts (station-level)                    │
 │  • weather_stations (metadata)                              │
@@ -38,7 +38,7 @@ This project implements a pipeline that ingests German weather data from the DWD
                        │
                        ▼ Transformation (Every 1h)
 ┌─────────────────────────────────────────────────────────────
-│                  SILVER LAYER (Staging)                     │
+│                  STAGING LAYER                              │
 │  • stg_observations (validated)                             │
 │  • stg_forecasts (validated)                                │
 │  Data Quality Steps:                                        │
@@ -49,7 +49,7 @@ This project implements a pipeline that ingests German weather data from the DWD
                        │
                        ▼ Aggregation (IDW)
 ┌─────────────────────────────────────────────────────────────
-│                  GOLD LAYER (ML-Ready)                      │
+│                  ML-READY LAYER                             │
 │  • analytics_weather_by_postal_code                         │
 │    - Postal code level (269 codes)                          │
 │    - Hourly resolution                                      │
