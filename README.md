@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A pipeline that serves downstream ML services such as energy market forecasting, using German weather data from the DWD, and transforms the provided observations and forecasts at postal code granularity.
+A pipeline that serves downstream ML services such as energy market forecasting, using German weather data (DWD), and transforms the provided observations and forecasts at postal code granularity.
 
 ### Key Features
 - **Medallion Architecture**: Bronze (Raw) → Silver (Cleaned) → Gold (ML-Ready)
